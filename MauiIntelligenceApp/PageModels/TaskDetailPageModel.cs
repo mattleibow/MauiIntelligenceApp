@@ -48,11 +48,20 @@ public partial class TaskDetailPageModel : ObservableObject, IQueryAttributable
 
 	private async Task LoadTaskAsync(IDictionary<string, object> query)
 	{
+		var projectID = 0;
 		if (query.TryGetValue(ProjectQueryKey, out var project))
-			Project = (Project)project;
+		{
+			if (project is Project pObj)
+				projectID = pObj.ID;
+			else if (project is int pInt)
+				projectID = pInt;
+			else if (project is string pStr && int.TryParse(pStr, out var pId))
+				projectID = pId;
+			else 
+				_errorHandler.HandleError(new Exception($"Project query parameter is not valid: {project}."));
+		}
 
-		int taskId = 0;
-
+		var taskId = 0;
 		if (query.ContainsKey("id"))
 		{
 			taskId = Convert.ToInt32(query["id"]);
@@ -82,8 +91,8 @@ public partial class TaskDetailPageModel : ObservableObject, IQueryAttributable
             IsExistingProject = true;
 		}
 
-		if (Project is not null)
-			SelectedProjectIndex = Projects.FindIndex(p => p.ID == Project.ID);
+		if (projectID > 0)
+			SelectedProjectIndex = Projects.FindIndex(p => p.ID == projectID);
 		else if (_task?.ProjectID > 0)
 			SelectedProjectIndex = Projects.FindIndex(p => p.ID == _task.ProjectID);
 

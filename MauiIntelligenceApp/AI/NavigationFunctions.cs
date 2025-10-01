@@ -46,7 +46,8 @@ public class NavigationFunctions(NotificationService notificationService) : IAIF
 
             // Task Navigation
             new RouteLineItem("task", "Go to a page that will allow you to create a new task."),
-            new RouteLineItem("task?id=<task-id>", "View and edit details about a specific task.")
+            new RouteLineItem("task?id=<task-id>", "View and edit details about a specific task."),
+            new RouteLineItem("task?project=<project-id>", "Go to a page that will allow you to create a new task in a specific project."),
         ];
 
     public string GetRoutesDescription()
