@@ -7,6 +7,10 @@ public class SemanticTreeBuilder
 {
     private readonly List<IElementVisitor> _visitors =
     [
+        // Syncfusion visitors
+        new SfSegmentedControlVisitor(),
+        new SfSegmentItemVisitor(),
+
         // Register interactable control visitors first (most specific)
         new ButtonVisitor(),
         new EntryVisitor(),

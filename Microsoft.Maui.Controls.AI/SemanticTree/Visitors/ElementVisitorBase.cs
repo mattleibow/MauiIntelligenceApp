@@ -46,15 +46,15 @@ public abstract class ElementVisitorBase : IElementVisitor
         WriteAttribute("ClassId", element.ClassId, writer);
 
         // Semantic Properties
-        if (element is VisualElement visualElement)
+        if (element is BindableObject obj)
         {
-            var semanticDesc = SemanticProperties.GetDescription(visualElement);
+            var semanticDesc = SemanticProperties.GetDescription(obj);
             WriteAttribute("SemanticDescription", semanticDesc, writer);
 
-            var semanticHint = SemanticProperties.GetHint(visualElement);
+            var semanticHint = SemanticProperties.GetHint(obj);
             WriteAttribute("SemanticHint", semanticHint, writer);
 
-            var headingLevel = SemanticProperties.GetHeadingLevel(visualElement);
+            var headingLevel = SemanticProperties.GetHeadingLevel(obj);
             if (headingLevel != SemanticHeadingLevel.None)
                 WriteAttribute("HeadingLevel", headingLevel.ToString(), writer);
         }

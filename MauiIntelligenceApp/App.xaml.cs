@@ -7,8 +7,7 @@ public partial class App : Application
 		InitializeComponent();
 	}
 
-	protected override Window CreateWindow(IActivationState? activationState)
-	{
-		return new MainWindow();
-	}
+	protected override Window CreateWindow(IActivationState? activationState) =>
+		activationState?.Context.Services.GetRequiredService<MainWindow>() ??
+		throw new InvalidOperationException("MainWindow not registered in DI container.");
 }
