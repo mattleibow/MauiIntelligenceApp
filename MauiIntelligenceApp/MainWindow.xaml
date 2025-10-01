@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Window xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:local="clr-namespace:MauiIntelligenceApp"
+        x:Class="MauiIntelligenceApp.MainWindow"
+        Title="Intelligence App">
+
+    <Window.TitleBar>
+        <TitleBar
+            x:Name="AppTitleBar"
+            Title="Intelligence App"
+            BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+            ForegroundColor="{AppThemeBinding Light=White, Dark=White}"
+            HeightRequest="52">
+            <TitleBar.Content>
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                    <SearchBar
+                        x:Name="TitleBarSearchBox"
+                        Placeholder="Search projects and tasks..."
+                        PlaceholderColor="{AppThemeBinding Light=#CCFFFFFF, Dark=#AAFFFFFF}"
+                        TextColor="{AppThemeBinding Light=White, Dark=White}"
+                        BackgroundColor="{AppThemeBinding Light=#40FFFFFF, Dark=#40000000}"
+                        MaximumWidthRequest="600"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="Center"
+                        SearchButtonPressed="SearchBar_SearchButtonPressed"
+                        Grid.Column="0" />
+                    
+                    <Button
+                        x:Name="DebugSemanticTreeButton"
+                        Text="🐛 Debug UI"
+                        BackgroundColor="{AppThemeBinding Light=#40FFFFFF, Dark=#40000000}"
+                        TextColor="{AppThemeBinding Light=White, Dark=White}"
+                        FontSize="12"
+                        Padding="10,0"
+                        VerticalOptions="Center"
+                        Clicked="DebugSemanticTreeButton_Clicked"
+                        Grid.Column="1"
+                        SemanticProperties.Description="Debug Semantic Tree" />
+                </Grid>
+            </TitleBar.Content>
+        </TitleBar>
+    </Window.TitleBar>
+
+    <local:AppShell x:Name="AppShellContent" />
+
+</Window>

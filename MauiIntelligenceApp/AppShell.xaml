@@ -5,15 +5,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:sf="clr-namespace:Syncfusion.Maui.Toolkit.SegmentedControl;assembly=Syncfusion.Maui.Toolkit"
     xmlns:pages="clr-namespace:MauiIntelligenceApp.Pages"
-    xmlns:controls="clr-namespace:MauiIntelligenceApp.Controls"
     Shell.FlyoutBehavior="Flyout"
-    Shell.NavBarIsVisible="False"
     Title="MauiIntelligenceApp">
-
-    <!-- Custom Title Bar -->
-    <Shell.TitleView>
-        <controls:CustomTitleBar x:Name="TitleBar" />
-    </Shell.TitleView>
 
     <ShellContent
         Title="Dashboard"

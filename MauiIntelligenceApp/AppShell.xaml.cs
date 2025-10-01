@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.Messaging;
-using MauiIntelligenceApp.Messages;
 using Font = Microsoft.Maui.Font;
+
 namespace MauiIntelligenceApp;
 
 public partial class AppShell : Shell
@@ -10,9 +10,11 @@ public partial class AppShell : Shell
 	public AppShell()
 	{
 		InitializeComponent();
+
 		var currentTheme = Application.Current!.RequestedTheme;		
 		ThemeSegmentedControl.SelectedIndex = currentTheme == AppTheme.Light ? 0 : 1;
 	}
+	
 	public static async Task DisplaySnackbarAsync(string message)
 	{
 		CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();

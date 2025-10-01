@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Controls.AI;
 using Syncfusion.Maui.Toolkit.Hosting;
 
 namespace MauiIntelligenceApp;
@@ -32,6 +33,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<TagRepository>();
 		builder.Services.AddSingleton<SeedDataService>();
 		builder.Services.AddSingleton<ModalErrorHandler>();
+		builder.Services.AddSingleton<ISemanticTreeService, SemanticTreeService>();
 		builder.Services.AddSingleton<MainPageModel>();
 		builder.Services.AddSingleton<ProjectListPageModel>();
 		builder.Services.AddSingleton<ManageMetaPageModel>();
