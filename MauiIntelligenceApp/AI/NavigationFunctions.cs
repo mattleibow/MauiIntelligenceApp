@@ -91,6 +91,15 @@ public class NavigationFunctions(NotificationService notificationService) : IAIF
         to show after navigation completes.
 
         Always provide the exact route, including the same number of slashes (/) as in the template.
+
+        After navigation, review the current page's properties and state
+        to understand its context and determine what action to take next.
+
+        You may need to interact with the current page's properties or call
+        other functions to fulfill the user's request.
+
+        Make sure to call the functions to update the new page as they do
+        NOT happen automatically.
         """)]
     public async Task<string> NavigateAsync(
         [Description("The route to navigate to, including any query parameters.")] string route,
@@ -126,6 +135,26 @@ public class NavigationFunctions(NotificationService notificationService) : IAIF
         if (success && !string.IsNullOrWhiteSpace(notificationMessage))
         {
             await notificationService.ShowNotificationAsync(notificationMessage);
+        }
+
+        if (success)
+        {
+            response =
+                $"""
+                {response}
+
+                {PageModelManipulationFunctions.CurrentPage?.GetSummary()}
+
+                Before continuing, look at the current page's properties and state
+                to understand its context.
+                Then look at the user's last request to determine what action to take next.
+
+                You may need to interact with the current page's properties or call
+                other functions to fulfill the user's request.
+
+                Make sure to call the functions to update the new page as they do
+                NOT happen automatically.
+                """;
         }
 
         return response;

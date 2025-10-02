@@ -1,11 +1,61 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MauiIntelligenceApp.AI;
 using MauiIntelligenceApp.Models;
 
 namespace MauiIntelligenceApp.PageModels;
 
-public partial class ProjectDetailPageModel : ObservableObject, IQueryAttributable, IProjectTaskPageModel
+public partial class ProjectDetailPageModel : ObservableObject, IQueryAttributable, IProjectTaskPageModel, IPageModelRepresentation
 {
+	string IPageModelRepresentation.Name => "Project Detail Page";
+	string IPageModelRepresentation.Capabilities =>
+		"""
+		- Can display and edit project details including name, description, and category.
+		- Can display a list of tasks associated with the project.
+		""";
+	string IPageModelRepresentation.Properties =>
+		"""
+		- name: Name
+		  description: The name of the project.
+		  type: string
+		  editable: true
+		- name: Description
+		  description: A detailed description of the project.
+		  type: string
+		  editable: true
+		- name: Category
+		  description: The category the project belongs to.
+		  type: single-select
+		  editable: true
+		  instructions: Ask for a list of available categories before selecting.
+		- name: Categories
+		  description: The list of available categories.
+		  type: list of Category objects
+		  editable: false
+		""";
+	void IPageModelRepresentation.SetValue(string propertyName, object? value)
+	{
+		switch (propertyName.ToLower())
+		{
+			case "name":
+				Name = value?.ToString() ?? string.Empty;
+				break;
+			case "description":
+				Description = value?.ToString() ?? string.Empty;
+				break;
+		}
+	}
+
+	object? IPageModelRepresentation.GetValue(string propertyName) =>
+		propertyName.ToLower() switch
+		{
+			"name" => Name,
+			"description" => Description,
+			"category" => Category,
+			"categories" => Categories,
+			_ => null
+		};
+
 	private Project? _project;
 	private readonly ProjectRepository _projectRepository;
 	private readonly TaskRepository _taskRepository;
@@ -64,6 +114,12 @@ public partial class ProjectDetailPageModel : ObservableObject, IQueryAttributab
 		_errorHandler = errorHandler;
 		_icon = _icons.First();
 		Tasks = [];
+	}
+
+	[RelayCommand]
+	private void Appearing()
+	{
+		PageModelManipulationFunctions.CurrentPage = this;
 	}
 
 	public void ApplyQueryAttributes(IDictionary<string, object> query)

@@ -41,12 +41,14 @@ public static class MauiProgram
 #endif
 
 
+		builder.Services.AddSingleton<NotificationService>();
 		builder.Services.AddSingleton<DataAccessFunctions>();
 		builder.Services.AddSingleton<NavigationFunctions>();
-		builder.Services.AddSingleton<NotificationService>();
+		builder.Services.AddSingleton<PageModelManipulationFunctions>();
+		// builder.Services.AddSingleton<IAIFunctionProvider>(static sp => sp.GetRequiredService<NotificationService>());
 		builder.Services.AddSingleton<IAIFunctionProvider>(static sp => sp.GetRequiredService<DataAccessFunctions>());
 		builder.Services.AddSingleton<IAIFunctionProvider>(static sp => sp.GetRequiredService<NavigationFunctions>());
-		// builder.Services.AddSingleton<IAIFunctionProvider>(static sp => sp.GetRequiredService<NotificationService>());
+		builder.Services.AddSingleton<IAIFunctionProvider>(static sp => sp.GetRequiredService<PageModelManipulationFunctions>());
 
 		builder.Services.AddSingleton<ProjectRepository>();
 		builder.Services.AddSingleton<TaskRepository>();

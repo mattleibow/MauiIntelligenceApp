@@ -48,18 +48,35 @@ public partial class MainWindow : Window
 			Some functions have a notification message that will be shown to the user.
 			This should be used to inform the user of what you have done and not to share
 			information you have learned from the functions.
+
+			In order to update the current page, you may need to call functions to set properties
+			or perform actions on the current page. These do NOT happen automatically.
+
+			One thing to always remember, no saving happens automatically and the user will
+			step in to do this. Do just enough to display data and enter/modify properties.
+
+			The USER will save AFTER they are happy.
+
+			The user may wish to make further changes before saving. 
+
+			Get the user to a good place and let them take over.
+			""";
+
+		var funcPrompt =
+			$"""
+			Use the functions provided to help the user accomplish their request.
+			Respond with a function call to perform an action or get information.
+
+			Do not respond with words, only respond with a function call.
 			""";
 
 		var prompt =
 			$"""
 			The user has entered the following request:
 
+			```
 			{TitleBarSearchBox.Text}
-
-			Use the functions provided to help the user accomplish their request.
-			Respond with a function call to perform an action or get information.
-
-			Do not respond with words, only respond with a function call.
+			```
 			""";
 
 		var requestOptions = new ChatOptions()
@@ -79,7 +96,8 @@ public partial class MainWindow : Window
 		var messages = new List<ChatMessage>()
 		{
 			new ChatMessage(ChatRole.System, systemPrompt),
-			new ChatMessage(ChatRole.User, prompt)
+			new ChatMessage(ChatRole.User, funcPrompt),
+			new ChatMessage(ChatRole.User, prompt),
 		};
 
 		var client = new FunctionInvokingChatClient(chatClient);

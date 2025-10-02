@@ -1,11 +1,28 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MauiIntelligenceApp.AI;
 using MauiIntelligenceApp.Models;
 
 namespace MauiIntelligenceApp.PageModels;
 
-public partial class MainPageModel : ObservableObject, IProjectTaskPageModel
+public partial class MainPageModel : ObservableObject, IProjectTaskPageModel, IPageModelRepresentation
 {
+	string IPageModelRepresentation.Name => "Main Page";
+	string IPageModelRepresentation.Capabilities => 
+		"""
+		- Can display a list of projects and tasks.
+		- Can navigate to project and task detail pages.
+		- Can create new projects and tasks.
+		- Can mark tasks as completed.
+		- Can refresh the project and task lists.
+		""";
+	string IPageModelRepresentation.Properties =>
+		"""
+		None.
+		""";
+	void IPageModelRepresentation.SetValue(string propertyName, object? value) { }
+	object? IPageModelRepresentation.GetValue(string propertyName) => null;
+
 	private bool _isNavigatedTo;
 	private bool _dataLoaded;
 	private readonly ProjectRepository _projectRepository;
@@ -124,6 +141,8 @@ public partial class MainPageModel : ObservableObject, IProjectTaskPageModel
 	[RelayCommand]
 	private async Task Appearing()
 	{
+		PageModelManipulationFunctions.CurrentPage = this;
+
 		if (!_dataLoaded)
 		{
 			await InitData(_seedDataService);

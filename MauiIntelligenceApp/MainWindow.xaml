@@ -24,6 +24,7 @@
                         HorizontalOptions="Fill"
                         VerticalOptions="Center"
                         SearchButtonPressed="SearchBar_SearchButtonPressed"
+                        Text="I want to add swimming to my health project."
                         Grid.Column="0" />
                     
                     <Button
